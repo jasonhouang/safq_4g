@@ -73,6 +73,12 @@
 
 /* Device virtual file system */
 
+#define RT_USING_DFS
+#define DFS_USING_WORKDIR
+#define DFS_FILESYSTEMS_MAX 2
+#define DFS_FILESYSTEM_TYPES_MAX 2
+#define DFS_FD_MAX 16
+#define RT_USING_DFS_DEVFS
 
 /* Device Drivers */
 
@@ -85,13 +91,15 @@
 #define RT_SERIAL_USING_DMA
 #define RT_SERIAL_RB_BUFSZ 64
 #define RT_USING_PIN
+#define RT_USING_RTC
 
 /* Using USB */
 
 
 /* POSIX layer and C standard library */
 
-#define RT_LIBC_USING_TIME
+#define RT_USING_LIBC
+#define RT_USING_POSIX
 
 /* Network */
 
@@ -102,7 +110,8 @@
 /* protocol stack implement */
 
 #define SAL_USING_AT
-#define SAL_SOCKETS_NUM 16
+#define SAL_USING_TLS
+#define SAL_USING_POSIX
 
 /* Network interface device */
 
@@ -138,6 +147,8 @@
 
 /* IoT - internet of things */
 
+#define PKG_USING_CJSON
+#define PKG_USING_CJSON_V102
 
 /* Wi-Fi */
 
@@ -149,9 +160,70 @@
 
 /* IoT Cloud */
 
+#define PKG_USING_ALI_IOTKIT
+#define PKG_USING_ALI_IOTKIT_PRODUCT_KEY "a1DFXOrA3QA"
+#define PKG_USING_ALI_IOTKIT_PRODUCT_SECRET "Qq9ZCBU5rVuz4Gat"
+#define PKG_USING_ALI_IOTKIT_DEVICE_NAME "stm32_test"
+#define PKG_USING_ALI_IOTKIT_DEVICE_SECRET "nHlrBXQhRjQ8tHnaWKI2kbRuHA6ce1so"
+#define PKG_ALI_IOTKIT_SELECT_ITEM
+#define PLATFORM_HAS_STDINT
+#define PLATFORM_HAS_DYNMEM
+#define PLATFORM_HAS_OS
+#define INFRA_STRING
+#define INFRA_NET
+#define INFRA_LIST
+#define INFRA_LOG_NETWORK_PAYLOAD
+#define INFRA_LOG
+
+/* Log Configurations */
+
+#define INFRA_LOG_MUTE_FLW
+#define INFRA_LOG_MUTE_DBG
+#define INFRA_LOG_MUTE_INF
+#define INFRA_LOG_MUTE_WRN
+#define INFRA_LOG_MUTE_CRT
+#define INFRA_TIMER
+#define INFRA_JSON_PARSER
+#define INFRA_CJSON
+#define INFRA_MD5
+#define INFRA_SHA256
+#define INFRA_REPORT
+#define INFRA_HTTPC
+#define INFRA_COMPAT
+#define INFRA_CLASSIC
+#define DEV_SIGN
+#define MQTT_COMM_ENABLED
+
+/* MQTT Configurations */
+
+#define MQTT_DEFAULT_IMPL
+#define MQTT_DIRECT
+#define DEVICE_MODEL_CLASSIC
+#define LOG_REPORT_TO_CLOUD
+#define DEVICE_MODEL_ENABLED
+
+/* Device Model Configurations */
+
+#define SUPPORT_TLS
+#define OTA_ENABLED
+#define PKG_USING_ALI_IOTKIT_SAMPLES
+#define PKG_USING_ALI_IOTKIT_MQTT_SAMPLE
+#define PKG_USING_ALI_IOTKIT_DEV_MODEL_SAMPLE
+#define PKG_USING_ALI_IOTKIT_LATEST_VERSION
+#define PKG_ALI_IOTKIT_VER_NUM 0x99999
 
 /* security packages */
 
+#define PKG_USING_MBEDTLS
+
+/* Select Root Certificate */
+
+#define MBEDTLS_AES_ROM_TABLES
+#define MBEDTLS_ECP_WINDOW_SIZE 2
+#define MBEDTLS_SSL_MAX_CONTENT_LEN 3584
+#define MBEDTLS_MPI_MAX_SIZE 1024
+#define MBEDTLS_CTR_DRBG_KEYSIZE 32
+#define PKG_USING_MBEDTLS_V2710
 
 /* language packages */
 
