@@ -335,7 +335,7 @@
               <MiscControls />
               <Define>USE_HAL_DRIVER, STM32F407xx, RT_USING_ARM_LIBC</Define>
               <Undefine />
-              <IncludePath>.;..\..\..\include;applications;.;board;board\CubeMX_Config\Inc;..\libraries\HAL_Drivers;..\libraries\HAL_Drivers\config;packages\ali-iotkit\iotkit-embedded\src\infra;packages\ali-iotkit\iotkit-embedded\src\mqtt\impl;packages\ali-iotkit\iotkit-embedded\src\mqtt;packages\ali-iotkit\iotkit-embedded\src\dev_model;packages\ali-iotkit\iotkit-embedded\src\dev_model\client;packages\ali-iotkit\iotkit-embedded\src\dev_model\server;packages\ali-iotkit\iotkit-embedded\src\dev_sign;packages\ali-iotkit\iotkit-embedded\src\ota;packages\ali-iotkit\iotkit-embedded\wrappers;packages\ali-iotkit\iotkit-embedded\samples\dev_model;packages\ali-iotkit-latest\iotkit-embedded\src\infra;packages\ali-iotkit-latest\iotkit-embedded\src\mqtt\impl;packages\ali-iotkit-latest\iotkit-embedded\src\mqtt;packages\ali-iotkit-latest\iotkit-embedded\src\dev_model;packages\ali-iotkit-latest\iotkit-embedded\src\dev_model\client;packages\ali-iotkit-latest\iotkit-embedded\src\dev_model\server;packages\ali-iotkit-latest\iotkit-embedded\src\dev_sign;packages\ali-iotkit-latest\iotkit-embedded\src\ota;packages\ali-iotkit-latest\iotkit-embedded\wrappers;packages\ali-iotkit-latest\iotkit-embedded\samples\dev_model;packages\cJSON-v1.0.2;packages\mbedtls-v2.7.10\mbedtls\include;packages\mbedtls-v2.7.10\ports\inc;..\..\..\libcpu\arm\common;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\dfs\include;..\..\..\components\dfs\filesystems\devfs;..\..\..\components\drivers\include;..\..\..\components\drivers\include;..\..\..\components\drivers\include;..\..\..\components\drivers\include;..\..\..\components\finsh;..\..\..\components\libc\compilers\armlibc;..\..\..\components\libc\compilers\common;..\..\..\components\net\at\include;..\..\..\components\net\at\at_socket;..\..\..\components\net\netdev\include;..\..\..\components\net\sal_socket\include;..\..\..\components\net\sal_socket\include\socket;..\..\..\components\net\sal_socket\impl;..\..\..\components\net\sal_socket\include\dfs_net;..\..\..\components\net\sal_socket\include\dfs_net\sys_select;..\..\..\components\net\sal_socket\include\socket\sys_socket;..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc;..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include;..\libraries\STM32F4xx_HAL\CMSIS\Include</IncludePath>
+              <IncludePath>.;..\..\..\include;applications;.;board;board\CubeMX_Config\Inc;..\libraries\HAL_Drivers;..\libraries\HAL_Drivers\config;packages\ali-iotkit-v3.0.1\iotkit-embedded\src\infra;packages\ali-iotkit-v3.0.1\iotkit-embedded\src\mqtt\impl;packages\ali-iotkit-v3.0.1\iotkit-embedded\src\mqtt;packages\ali-iotkit-v3.0.1\iotkit-embedded\src\dev_model;packages\ali-iotkit-v3.0.1\iotkit-embedded\src\dev_model\client;packages\ali-iotkit-v3.0.1\iotkit-embedded\src\dev_model\server;packages\ali-iotkit-v3.0.1\iotkit-embedded\src\dev_sign;packages\ali-iotkit-v3.0.1\iotkit-embedded\wrappers;packages\ali-iotkit-v3.0.1\iotkit-embedded\samples\dev_model;packages\at_device-v2.0.1\inc;packages\at_device-v2.0.1\class\ec20;packages\cJSON-v1.0.2;packages\mbedtls-v2.7.10\mbedtls\include;packages\mbedtls-v2.7.10\ports\inc;..\..\..\libcpu\arm\common;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\dfs\include;..\..\..\components\dfs\filesystems\devfs;..\..\..\components\drivers\include;..\..\..\components\drivers\include;..\..\..\components\drivers\include;..\..\..\components\drivers\include;..\..\..\components\finsh;..\..\..\components\libc\compilers\armlibc;..\..\..\components\libc\compilers\common;..\..\..\components\net\at\include;..\..\..\components\net\at\at_socket;..\..\..\components\net\netdev\include;..\..\..\components\net\sal_socket\include;..\..\..\components\net\sal_socket\include\socket;..\..\..\components\net\sal_socket\impl;..\..\..\components\net\sal_socket\include\dfs_net;..\..\..\components\net\sal_socket\include\dfs_net\sys_select;..\..\..\components\net\sal_socket\include\socket\sys_socket;..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc;..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include;..\libraries\STM32F4xx_HAL\CMSIS\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -538,707 +538,332 @@
             <File>
               <FileName>infra_defs.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\infra\infra_defs.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\infra\infra_defs.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>infra_cjson.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\infra\infra_cjson.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\infra\infra_cjson.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>infra_compat.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\infra\infra_compat.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>infra_httpc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\infra\infra_httpc.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>infra_json_parser.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\infra\infra_json_parser.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\infra\infra_compat.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>infra_log.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\infra\infra_log.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>infra_md5.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\infra\infra_md5.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\infra\infra_log.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>infra_net.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\infra\infra_net.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\infra\infra_net.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>infra_prt_nwk_payload.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\infra\infra_prt_nwk_payload.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\infra\infra_prt_nwk_payload.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>infra_report.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\infra\infra_report.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\infra\infra_report.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>infra_sha256.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\infra\infra_sha256.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\infra\infra_sha256.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>infra_string.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\infra\infra_string.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\infra\infra_string.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>infra_timer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\infra\infra_timer.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\infra\infra_timer.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>mqtt_api.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\mqtt\mqtt_api.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\mqtt\mqtt_api.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>MQTTConnectClient.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\mqtt\impl\MQTTConnectClient.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\mqtt\impl\MQTTConnectClient.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>MQTTDeserializePublish.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\mqtt\impl\MQTTDeserializePublish.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\mqtt\impl\MQTTDeserializePublish.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>MQTTPacket.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\mqtt\impl\MQTTPacket.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\mqtt\impl\MQTTPacket.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>MQTTSerializePublish.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\mqtt\impl\MQTTSerializePublish.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\mqtt\impl\MQTTSerializePublish.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>MQTTSubscribeClient.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\mqtt\impl\MQTTSubscribeClient.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\mqtt\impl\MQTTSubscribeClient.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>MQTTUnsubscribeClient.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\mqtt\impl\MQTTUnsubscribeClient.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\mqtt\impl\MQTTUnsubscribeClient.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>iotx_mqtt_client.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\mqtt\impl\iotx_mqtt_client.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\mqtt\impl\iotx_mqtt_client.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>dm_client.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\dev_model\client\dm_client.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\dev_model\client\dm_client.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>dm_client_adapter.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\dev_model\client\dm_client_adapter.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\dev_model\client\dm_client_adapter.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>dm_api.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\dev_model\dm_api.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\dev_model\dm_api.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>dm_cota.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\dev_model\dm_cota.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\dev_model\dm_cota.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>dm_fota.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\dev_model\dm_fota.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\dev_model\dm_fota.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>dm_ipc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\dev_model\dm_ipc.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\dev_model\dm_ipc.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>dm_manager.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\dev_model\dm_manager.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\dev_model\dm_manager.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>dm_message_cache.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\dev_model\dm_message_cache.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\dev_model\dm_message_cache.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>dm_message.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\dev_model\dm_message.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\dev_model\dm_message.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>dm_opt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\dev_model\dm_opt.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\dev_model\dm_opt.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>dm_ota.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\dev_model\dm_ota.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\dev_model\dm_ota.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>dm_msg_process.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\dev_model\dm_msg_process.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\dev_model\dm_msg_process.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>dm_utils.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\dev_model\dm_utils.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\dev_model\dm_utils.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>iotx_cm_mqtt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\dev_model\iotx_cm_mqtt.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\dev_model\iotx_cm_mqtt.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>impl_linkkit.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\dev_model\impl_linkkit.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\dev_model\impl_linkkit.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>iotx_cm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\dev_model\iotx_cm.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\dev_model\iotx_cm.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>dm_log_report.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\dev_model\dm_log_report.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\dev_model\dm_log_report.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>dev_sign_mqtt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\dev_sign\dev_sign_mqtt.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>iotx_ota.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\ota\iotx_ota.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>ota_fetch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\ota\ota_fetch.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>ota_lib.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\src\ota\ota_lib.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\iotkit-embedded\src\dev_sign\dev_sign_mqtt.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>HAL_OS_rtthread.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\ports\rtthread\HAL_OS_rtthread.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\ports\rtthread\HAL_OS_rtthread.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>HAL_TCP_rtthread.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\ports\rtthread\HAL_TCP_rtthread.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\ports\rtthread\HAL_TCP_rtthread.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>HAL_UDP_rtthread.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\ports\rtthread\HAL_UDP_rtthread.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\ports\rtthread\HAL_UDP_rtthread.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>wrapper.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\ports\wrapper.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>root_ca.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\iotkit-embedded\certs\root_ca.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>HAL_TLS_mbedtls.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\ports\tls\mbedtls\HAL_TLS_mbedtls.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\ports\wrapper.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>cJSON.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\samples\dev_model\cJSON.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\samples\dev_model\cJSON.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>linkkit_example_solo.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\samples\dev_model\linkkit_example_solo.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\samples\dev_model\linkkit_example_solo.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
               <FileName>mqtt-example.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit\samples\mqtt\mqtt-example.c</FilePath>
+              <FilePath>packages\ali-iotkit-v3.0.1\samples\mqtt\mqtt-example.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>at_device</GroupName>
+          <Files>
+            <File>
+              <FileName>at_device.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\at_device-v2.0.1\src\at_device.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
-              <FileName>infra_infra_defs.c</FileName>
+              <FileName>at_device_ec20.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\infra\infra_defs.c</FilePath>
+              <FilePath>packages\at_device-v2.0.1\class\ec20\at_device_ec20.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
-              <FileName>infra_infra_cjson.c</FileName>
+              <FileName>at_socket_ec20.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\infra\infra_cjson.c</FilePath>
+              <FilePath>packages\at_device-v2.0.1\class\ec20\at_socket_ec20.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
-              <FileName>infra_infra_compat.c</FileName>
+              <FileName>at_sample_ec20.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\infra\infra_compat.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>infra_infra_httpc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\infra\infra_httpc.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>infra_infra_json_parser.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\infra\infra_json_parser.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>infra_infra_log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\infra\infra_log.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>infra_infra_md5.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\infra\infra_md5.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>infra_infra_net.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\infra\infra_net.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>infra_infra_prt_nwk_payload.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\infra\infra_prt_nwk_payload.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>infra_infra_report.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\infra\infra_report.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>infra_infra_sha256.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\infra\infra_sha256.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>infra_infra_string.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\infra\infra_string.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>infra_infra_timer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\infra\infra_timer.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>mqtt_mqtt_api.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\mqtt\mqtt_api.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>impl_MQTTConnectClient.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\mqtt\impl\MQTTConnectClient.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>impl_MQTTDeserializePublish.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\mqtt\impl\MQTTDeserializePublish.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>impl_MQTTPacket.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\mqtt\impl\MQTTPacket.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>impl_MQTTSerializePublish.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\mqtt\impl\MQTTSerializePublish.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>impl_MQTTSubscribeClient.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\mqtt\impl\MQTTSubscribeClient.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>impl_MQTTUnsubscribeClient.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\mqtt\impl\MQTTUnsubscribeClient.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>impl_iotx_mqtt_client.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\mqtt\impl\iotx_mqtt_client.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>client_dm_client.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\dev_model\client\dm_client.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>client_dm_client_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\dev_model\client\dm_client_adapter.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>dev_model_dm_api.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\dev_model\dm_api.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>dev_model_dm_cota.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\dev_model\dm_cota.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>dev_model_dm_fota.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\dev_model\dm_fota.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>dev_model_dm_ipc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\dev_model\dm_ipc.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>dev_model_dm_manager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\dev_model\dm_manager.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>dev_model_dm_message_cache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\dev_model\dm_message_cache.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>dev_model_dm_message.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\dev_model\dm_message.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>dev_model_dm_opt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\dev_model\dm_opt.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>dev_model_dm_ota.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\dev_model\dm_ota.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>dev_model_dm_msg_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\dev_model\dm_msg_process.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>dev_model_dm_utils.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\dev_model\dm_utils.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>dev_model_iotx_cm_mqtt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\dev_model\iotx_cm_mqtt.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>dev_model_impl_linkkit.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\dev_model\impl_linkkit.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>dev_model_iotx_cm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\dev_model\iotx_cm.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>dev_model_dm_log_report.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\dev_model\dm_log_report.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>dev_sign_dev_sign_mqtt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\dev_sign\dev_sign_mqtt.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>ota_iotx_ota.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\ota\iotx_ota.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>ota_ota_fetch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\ota\ota_fetch.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>ota_ota_lib.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\src\ota\ota_lib.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>rtthread_HAL_OS_rtthread.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\ports\rtthread\HAL_OS_rtthread.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>rtthread_HAL_TCP_rtthread.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\ports\rtthread\HAL_TCP_rtthread.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>rtthread_HAL_UDP_rtthread.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\ports\rtthread\HAL_UDP_rtthread.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>ports_wrapper.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\ports\wrapper.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>certs_root_ca.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\iotkit-embedded\certs\root_ca.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>mbedtls_HAL_TLS_mbedtls.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\ports\tls\mbedtls\HAL_TLS_mbedtls.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>dev_model_linkkit_example_solo.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\samples\dev_model\linkkit_example_solo.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>mqtt_mqtt-example.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\ali-iotkit-latest\samples\mqtt\mqtt-example.c</FilePath>
+              <FilePath>packages\at_device-v2.0.1\samples\at_sample_ec20.c</FilePath>
             </File>
           </Files>
         </Group>
