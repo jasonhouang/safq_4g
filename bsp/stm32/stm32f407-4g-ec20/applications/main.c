@@ -12,8 +12,8 @@
 #include <rtdevice.h>
 #include <board.h>
 
-/* defined the LED0 pin: PB1 */
-#define LED0_PIN    GET_PIN(B, 1)
+/* defined the LED0 pin: PC4 */
+#define LED0_PIN    GET_PIN(C, 4)
 
 int main(void)
 {
