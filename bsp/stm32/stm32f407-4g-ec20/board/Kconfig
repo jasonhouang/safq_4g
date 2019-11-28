@@ -9,6 +9,12 @@ config SOC_STM32F407ZG
 
 menu "Onboard Peripheral Drivers"
 
+    config BSP_USING_COM2
+        bool "Enable COM2 (uart2 pin conflict with Ethernet and PWM)"
+        select BSP_USING_UART
+        select BSP_USING_UART2
+        default y
+
 endmenu
 
 menu "On-chip Peripheral Drivers"
