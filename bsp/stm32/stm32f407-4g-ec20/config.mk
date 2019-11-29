@@ -17,20 +17,19 @@ CPPPATHS :=-I$(RTT_ROOT)/bsp/stm32/libraries/HAL_Drivers \
 	-I$(BSP_ROOT)/applications \
 	-I$(BSP_ROOT)/board \
 	-I$(BSP_ROOT)/board/CubeMX_Config/Inc \
-	-I$(BSP_ROOT)/packages/ali-iotkit-latest/iotkit-embedded/src/dev_model \
-	-I$(BSP_ROOT)/packages/ali-iotkit-latest/iotkit-embedded/src/dev_model/client \
-	-I$(BSP_ROOT)/packages/ali-iotkit-latest/iotkit-embedded/src/dev_model/server \
-	-I$(BSP_ROOT)/packages/ali-iotkit-latest/iotkit-embedded/src/dev_sign \
-	-I$(BSP_ROOT)/packages/ali-iotkit-latest/iotkit-embedded/src/infra \
-	-I$(BSP_ROOT)/packages/ali-iotkit-latest/iotkit-embedded/src/mqtt \
-	-I$(BSP_ROOT)/packages/ali-iotkit-latest/iotkit-embedded/src/mqtt/impl \
-	-I$(BSP_ROOT)/packages/ali-iotkit-latest/iotkit-embedded/wrappers \
-	-I$(BSP_ROOT)/packages/at_device-latest/class/ec20 \
-	-I$(BSP_ROOT)/packages/at_device-latest/inc \
+	-I$(BSP_ROOT)/packages/ali-iotkit-v3.0.1/iotkit-embedded/src/dev_model \
+	-I$(BSP_ROOT)/packages/ali-iotkit-v3.0.1/iotkit-embedded/src/dev_model/client \
+	-I$(BSP_ROOT)/packages/ali-iotkit-v3.0.1/iotkit-embedded/src/dev_model/server \
+	-I$(BSP_ROOT)/packages/ali-iotkit-v3.0.1/iotkit-embedded/src/dev_sign \
+	-I$(BSP_ROOT)/packages/ali-iotkit-v3.0.1/iotkit-embedded/src/infra \
+	-I$(BSP_ROOT)/packages/ali-iotkit-v3.0.1/iotkit-embedded/src/mqtt \
+	-I$(BSP_ROOT)/packages/ali-iotkit-v3.0.1/iotkit-embedded/src/mqtt/impl \
+	-I$(BSP_ROOT)/packages/ali-iotkit-v3.0.1/iotkit-embedded/wrappers \
+	-I$(BSP_ROOT)/packages/at_device-v2.0.1/class/ec20 \
+	-I$(BSP_ROOT)/packages/at_device-v2.0.1/inc \
 	-I$(BSP_ROOT)/packages/cJSON-v1.0.2 \
-	-I$(BSP_ROOT)/packages/mbedtls-v2.6.0/mbedtls/include \
-	-I$(BSP_ROOT)/packages/mbedtls-v2.6.0/mbedtls/include/mbedtls \
-	-I$(BSP_ROOT)/packages/mbedtls-v2.6.0/ports/inc \
+	-I$(BSP_ROOT)/packages/mbedtls-v2.7.10/mbedtls/include \
+	-I$(BSP_ROOT)/packages/mbedtls-v2.7.10/ports/inc \
 	-I$(RTT_ROOT)/components/dfs/filesystems/devfs \
 	-I$(RTT_ROOT)/components/dfs/include \
 	-I$(RTT_ROOT)/components/drivers/include \
