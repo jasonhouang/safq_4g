@@ -304,6 +304,7 @@
 #define BSP_USING_UART2
 #define BSP_UART2_RX_USING_DMA
 #define BSP_UART2_TX_USING_DMA
+#define BSP_USING_UART6
 
 /* Board extended module Drivers */
 
