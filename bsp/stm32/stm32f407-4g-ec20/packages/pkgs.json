@@ -18,5 +18,10 @@
   "path": "/packages/security/mbedtls", 
   "ver": "v2.7.10", 
   "name": "MBEDTLS"
+ }, 
+ {
+  "path": "/packages/tools/SystemView", 
+  "ver": "latest", 
+  "name": "SYSTEMVIEW"
  }
 ]
