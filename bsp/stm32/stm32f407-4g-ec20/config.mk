@@ -17,6 +17,9 @@ CPPPATHS :=-I$(RTT_ROOT)/bsp/stm32/libraries/HAL_Drivers \
 	-I$(BSP_ROOT)/applications \
 	-I$(BSP_ROOT)/board \
 	-I$(BSP_ROOT)/board/CubeMX_Config/Inc \
+	-I$(BSP_ROOT)/packages/SystemView-latest \
+	-I$(BSP_ROOT)/packages/SystemView-latest/SystemView_Src/Config \
+	-I$(BSP_ROOT)/packages/SystemView-latest/SystemView_Src/SEGGER \
 	-I$(BSP_ROOT)/packages/ali-iotkit-v3.0.1/iotkit-embedded/src/dev_model \
 	-I$(BSP_ROOT)/packages/ali-iotkit-v3.0.1/iotkit-embedded/src/dev_model/client \
 	-I$(BSP_ROOT)/packages/ali-iotkit-v3.0.1/iotkit-embedded/src/dev_model/server \
