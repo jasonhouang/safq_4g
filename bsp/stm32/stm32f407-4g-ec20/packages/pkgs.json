@@ -15,6 +15,11 @@
   "name": "ALI_IOTKIT"
  }, 
  {
+  "path": "/packages/iot/ota_downloader", 
+  "ver": "latest", 
+  "name": "OTA_DOWNLOADER"
+ }, 
+ {
   "path": "/packages/security/mbedtls", 
   "ver": "v2.7.10", 
   "name": "MBEDTLS"
@@ -23,5 +28,10 @@
   "path": "/packages/tools/SystemView", 
   "ver": "latest", 
   "name": "SYSTEMVIEW"
+ }, 
+ {
+  "path": "/packages/system/fal", 
+  "ver": "latest", 
+  "name": "FAL"
  }
 ]

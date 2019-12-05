@@ -92,6 +92,7 @@
 #define RT_SERIAL_RB_BUFSZ 512
 #define RT_USING_PIN
 #define RT_USING_RTC
+#define RT_USING_SPI
 
 /* Using USB */
 
@@ -142,6 +143,7 @@
 
 /* Utilities */
 
+#define RT_USING_RYM
 
 /* RT-Thread online packages */
 
@@ -214,6 +216,10 @@
 #define PKG_USING_ALI_IOTKIT_MQTT_SAMPLE
 #define PKG_USING_ALI_IOTKIT_V30001
 #define PKG_ALI_IOTKIT_VER_NUM 0x30001
+#define PKG_USING_OTA_DOWNLOADER
+#define OTA_DOWNLOADER_DEBUG
+#define PKG_USING_YMODEM_OTA
+#define PKG_USING_OTA_DOWNLOADER_LATEST_VERSION
 
 /* security packages */
 
@@ -274,6 +280,12 @@
 
 /* system packages */
 
+#define PKG_USING_FAL
+#define FAL_DEBUG_CONFIG
+#define FAL_DEBUG 1
+#define FAL_PART_HAS_TABLE_CFG
+#define PKG_USING_FAL_LATEST_VERSION
+#define PKG_FAL_VER_NUM 0x99999
 
 /* peripheral libraries and drivers */
 
@@ -305,6 +317,11 @@
 #define BSP_UART2_RX_USING_DMA
 #define BSP_UART2_TX_USING_DMA
 #define BSP_USING_UART6
+#define BSP_USING_SPI
+#define BSP_USING_SPI2
+#define BSP_SPI2_TX_USING_DMA
+#define BSP_SPI2_RX_USING_DMA
+#define BSP_USING_ON_CHIP_FLASH
 
 /* Board extended module Drivers */
 
