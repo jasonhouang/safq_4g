@@ -15,6 +15,14 @@ menu "Onboard Peripheral Drivers"
         select BSP_USING_UART2
         default y
 
+    config BSP_USING_SPI_FLASH
+        bool "Enable SPI FLASH (W25Q128 spi2)"
+        select BSP_USING_SPI
+        select BSP_USING_SPI2
+        select RT_USING_SFUD
+        select RT_SFUD_USING_SFDP
+        default n
+
 endmenu
 
 menu "On-chip Peripheral Drivers"
