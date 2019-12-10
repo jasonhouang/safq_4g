@@ -1,5 +1,6 @@
 /*
  * File      : fal_flash_sfud_port.c
+ * r_flash0
  * This file is part of FAL (Flash Abstraction Layer) package
  * COPYRIGHT (C) 2006 - 2018, RT-Thread Development Team
  *
@@ -31,7 +32,7 @@
 #endif
 
 #ifndef FAL_USING_NOR_FLASH_DEV_NAME
-#define FAL_USING_NOR_FLASH_DEV_NAME             "norflash0"
+#define FAL_USING_NOR_FLASH_DEV_NAME             "W25Q128"
 #endif
 
 static int init(void);
@@ -40,7 +41,7 @@ static int write(long offset, const uint8_t *buf, size_t size);
 static int erase(long offset, size_t size);
 
 static sfud_flash_t sfud_dev = NULL;
-struct fal_flash_dev nor_flash0 = {FAL_USING_NOR_FLASH_DEV_NAME, 0, 8 * 1024 * 1024, 4096, {init, read, write, erase}};
+struct fal_flash_dev nor_flash0 = {FAL_USING_NOR_FLASH_DEV_NAME, 0, 2 * 1024 * 1024, 4096, {init, read, write, erase}};
 
 static int init(void)
 {
