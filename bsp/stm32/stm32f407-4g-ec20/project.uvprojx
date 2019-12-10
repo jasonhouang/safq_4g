@@ -503,11 +503,6 @@
               <FilePath>..\libraries\HAL_Drivers\drv_spi.c</FilePath>
             </File>
             <File>
-              <FileName>drv_qspi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\HAL_Drivers\drv_qspi.c</FilePath>
-            </File>
-            <File>
               <FileName>drv_flash_f4.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\libraries\HAL_Drivers\drv_flash\drv_flash_f4.c</FilePath>
@@ -822,7 +817,7 @@
                   <MiscControls> --c99</MiscControls>
                   <Define> </Define>
                   <Undefine> </Undefine>
-                  <IncludePath></IncludePath>
+                  <IncludePath> </IncludePath>
                 </VariousControls>
               </Cads>
               <Aads>
@@ -1456,7 +1451,7 @@
                   <MiscControls> --c99</MiscControls>
                   <Define> </Define>
                   <Undefine> </Undefine>
-                  <IncludePath></IncludePath>
+                  <IncludePath> </IncludePath>
                 </VariousControls>
               </Cads>
               <Aads>
@@ -1504,11 +1499,6 @@
               <FileName>spi_dev.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\components\drivers\spi\spi_dev.c</FilePath>
-            </File>
-            <File>
-              <FileName>qspi_core.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\components\drivers\spi\qspi_core.c</FilePath>
             </File>
             <File>
               <FileName>spi_flash_sfud.c</FileName>
