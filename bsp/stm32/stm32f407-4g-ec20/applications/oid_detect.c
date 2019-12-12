@@ -1,5 +1,6 @@
 #include <rtthread.h>
 #include "string.h"
+#include "mqtt_service.h"
 
 #define OID_UART_NAME       "uart6"
 
@@ -54,13 +55,14 @@ static void serial_thread_entry(void *parameter)
             if (checksum + 4 == cmd_buff[index - 1])
             {
                 rt_kprintf("oid code: 0x%04x\r\n", *(uint32_t *)&cmd_buff[2]);
+                oid_publish(*(uint32_t *)&cmd_buff[2]);
             }
             else
             {
                 rt_kprintf("checksum 0x%x error\r\n", checksum + 4);
             }
             has_detected = RT_FALSE;
-            rt_device_write(serial, 0, &cmd_buff[0], 7);
+            //rt_device_write(serial, 0, &cmd_buff[0], 7);
             memset(cmd_buff, 0x0, 30);
         }
     }
@@ -93,7 +95,9 @@ static int oid_detect(int argc, char *argv[])
 
     rt_device_set_rx_indicate(serial, uart_input);
 
-    rt_thread_t thread = rt_thread_create("serial", serial_thread_entry, RT_NULL, 1024, 25, 10);
+    ali_mqtt_init();
+
+    rt_thread_t thread = rt_thread_create("serial", serial_thread_entry, RT_NULL, 2048, 25, 10);
     if (thread != RT_NULL)
     {
         rt_thread_startup(thread);
