@@ -30,6 +30,7 @@ SRC_FILES +=$(RTT_ROOT)/bsp/stm32/libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/S
 SRC_FILES +=$(RTT_ROOT)/bsp/stm32/libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c
 SRC_FILES +=$(RTT_ROOT)/bsp/stm32/libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_usart.c
 SRC_FILES +=$(BSP_ROOT)/applications/main.c
+SRC_FILES +=$(BSP_ROOT)/applications/oid_detect.c
 SRC_FILES +=$(BSP_ROOT)/board/CubeMX_Config/Src/stm32f4xx_hal_msp.c
 SRC_FILES +=$(BSP_ROOT)/board/board.c
 SRC_FILES +=$(BSP_ROOT)/board/ports/fal_flash_sfud_port.c
