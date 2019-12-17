@@ -126,7 +126,7 @@ static void example_event_handle(void *pcontext, void *pclient, iotx_mqtt_event_
 static int mqtt_example_main(int argc, char *argv[])
 {
     int                     res = 0;
-    int                     loop_cnt = 0;
+//    int                     loop_cnt = 0;
     iotx_mqtt_param_t       mqtt_params;
 
     HAL_GetProductKey(DEMO_PRODUCT_KEY);
@@ -197,7 +197,7 @@ static int mqtt_example_main(int argc, char *argv[])
      *
      * default value is 60000.
      */
-    /* mqtt_params.keepalive_interval_ms = 60000; */
+    mqtt_params.keepalive_interval_ms = 60000;
 
     /**
      *
@@ -246,17 +246,16 @@ static int mqtt_example_main(int argc, char *argv[])
         return -1;
     }
 
-#if 0
     while (1) {
+#if 0
         if (0 == loop_cnt % 20) {
             example_publish(pclient);
         }
-
+#endif
         IOT_MQTT_Yield(pclient, 200);
 
-        loop_cnt += 1;
+//        loop_cnt += 1;
     }
-#endif
     return 0;
 }
 

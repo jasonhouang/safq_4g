@@ -68,6 +68,11 @@ static void serial_thread_entry(void *parameter)
     }
 }
 
+static void mqtt_thread_entry(void *parameter)
+{
+    ali_mqtt_init();
+}
+
 static int oid_detect(int argc, char *argv[])
 {
     rt_err_t ret = RT_EOK;
@@ -95,7 +100,16 @@ static int oid_detect(int argc, char *argv[])
 
     rt_device_set_rx_indicate(serial, uart_input);
 
-    ali_mqtt_init();
+    rt_thread_t thread_mqtt = rt_thread_create("mqtt", mqtt_thread_entry, RT_NULL, 3072, 25, 10);
+    if (thread_mqtt != RT_NULL)
+    {
+        rt_thread_startup(thread_mqtt);
+    }
+    else
+    {
+        ret = RT_ERROR;
+        return ret;
+    }
 
     rt_thread_t thread = rt_thread_create("serial", serial_thread_entry, RT_NULL, 2048, 25, 10);
     if (thread != RT_NULL)
