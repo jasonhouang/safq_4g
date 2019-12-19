@@ -7,6 +7,24 @@
 static struct rt_semaphore rx_sem;
 static rt_device_t serial;
 
+static uint32_t uint32_decode(const uint8_t * p_encoded_data)
+{
+    return ( (((uint32_t)((uint8_t *)p_encoded_data)[0]) << 0)  |
+            (((uint32_t)((uint8_t *)p_encoded_data)[1]) << 8)  |
+            (((uint32_t)((uint8_t *)p_encoded_data)[2]) << 16) |
+            (((uint32_t)((uint8_t *)p_encoded_data)[3]) << 24 ));
+}
+
+static uint32_t uint32_big_decode(const uint8_t * p_encoded_data)
+{
+    return ( (((uint32_t)((uint8_t *)p_encoded_data)[0]) << 24) |
+            (((uint32_t)((uint8_t *)p_encoded_data)[1]) << 16) |
+            (((uint32_t)((uint8_t *)p_encoded_data)[2]) << 8)  |
+            (((uint32_t)((uint8_t *)p_encoded_data)[3]) << 0) );
+}
+
+
+
 static rt_err_t uart_input(rt_device_t dev, rt_size_t size)
 {
     rt_sem_release(&rx_sem);
@@ -54,8 +72,9 @@ static void serial_thread_entry(void *parameter)
             }
             if (checksum + 4 == cmd_buff[index - 1])
             {
-                rt_kprintf("oid code: 0x%04x\r\n", *(uint32_t *)&cmd_buff[2]);
-                oid_publish(*(uint32_t *)&cmd_buff[2]);
+                uint32_t decode_code = uint32_big_decode(&cmd_buff[2]);
+                rt_kprintf("oid code: %d\r\n", decode_code);
+                oid_publish(decode_code);
             }
             else
             {
@@ -73,7 +92,7 @@ static void mqtt_thread_entry(void *parameter)
     ali_mqtt_init();
 }
 
-static int oid_detect(int argc, char *argv[])
+int oid_detect(int argc, char *argv[])
 {
     rt_err_t ret = RT_EOK;
     char uart_name[RT_NAME_MAX];
