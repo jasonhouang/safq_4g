@@ -13,7 +13,8 @@
 #include <board.h>
 
 #include "fal.h"
-#include "oid_detect.h"
+//#include "oid_detect.h"
+#include "ble_detect.h"
 
 #define APP_VERSION  "1.0.0"
 
@@ -27,7 +28,8 @@ int main(void)
     rt_pin_mode(LED0_PIN, PIN_MODE_OUTPUT);
 
     fal_init();
-    oid_detect(0, NULL);
+    //oid_detect(0, NULL);
+    ble_detect(0, NULL);
     
     rt_kprintf("The current version of APP firmware is %s\n", APP_VERSION);
     

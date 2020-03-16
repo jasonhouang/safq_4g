@@ -987,7 +987,7 @@ int rt_hw_usart_init(void)
         }
         if (uart_obj[i].config->Instance == USART6)
         {
-            uart_obj[i].serial.config.baud_rate = 9600;
+            uart_obj[i].serial.config.baud_rate = 115200;//9600;
         }
 
         /* register UART device */

@@ -1,5 +1,5 @@
-BSP_ROOT ?= /home/jason/data/tmp/safq/bsp/stm32/stm32f407-4g-ec20
-RTT_ROOT ?= /home/jason/data/tmp/safq
+BSP_ROOT ?= /home/jason/Workspaces/embedded/safq_4g/bsp/stm32/stm32f407-4g-ec20
+RTT_ROOT ?= /home/jason/Workspaces/embedded/safq_4g
 
 CROSS_COMPILE ?=/opt/gcc-arm-none-eabi-6_2-2016q4/bin/arm-none-eabi-
 

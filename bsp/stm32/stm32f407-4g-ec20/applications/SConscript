@@ -5,7 +5,7 @@ cwd     = GetCurrentDir()
 CPPPATH = [cwd, str(Dir('#'))]
 src     = Split("""
 main.c
-oid_detect.c
+ble_detect.c
 mqtt_service.c
 """)
 

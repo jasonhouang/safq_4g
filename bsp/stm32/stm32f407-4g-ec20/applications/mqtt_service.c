@@ -259,6 +259,47 @@ static int mqtt_example_main(int argc, char *argv[])
     return 0;
 }
 
+static int mqtt_ble_publish(void *handle, uint32_t timestamp)
+{
+    int             res = 0;
+    const char     *fmt = "/%s/%s/user/update";
+    char           *topic = NULL;
+    int             topic_len = 0;
+    char           *payload = NULL;
+    char           *payload_fmt = "{\"staple time\":\"%d\"}";
+    int             payload_len = 0;
+
+    topic_len = strlen(fmt) + strlen(DEMO_PRODUCT_KEY) + strlen(DEMO_DEVICE_NAME) + 1;
+    topic = HAL_Malloc(topic_len);
+    if (topic == NULL) {
+        EXAMPLE_TRACE("memory not enough");
+        return -1;
+    }
+    memset(topic, 0, topic_len);
+    HAL_Snprintf(topic, topic_len, fmt, DEMO_PRODUCT_KEY, DEMO_DEVICE_NAME);
+
+    payload_len = strlen(payload_fmt) + 8 + 1;
+    //rt_kprintf("payload_len = %d\r\n", payload_len);
+    payload = HAL_Malloc(payload_len);
+    if (payload == NULL) {
+        EXAMPLE_TRACE("memory not enough");
+        return -1;
+    }
+    memset(payload, 0, payload_len);
+    HAL_Snprintf(payload, payload_len, payload_fmt, timestamp);
+    //rt_kprintf("payload = %s(%d)\r\n", payload, strlen(payload));
+
+    res = IOT_MQTT_Publish_Simple(0, topic, IOTX_MQTT_QOS0, payload, strlen(payload));
+    if (res < 0) {
+        EXAMPLE_TRACE("publish failed, res = %d", res);
+        HAL_Free(topic);
+        return -1;
+    }
+
+    HAL_Free(topic);
+    return 0;
+}
+
 static int mqtt_publish(void *handle, uint32_t oid_code)
 {
     int             res = 0;
@@ -309,6 +350,11 @@ void oid_publish(uint32_t oid_code)
 {
     mqtt_publish(pclient, oid_code);
     //example_publish(pclient);
+}
+
+void ble_publish(uint32_t time_stamp)
+{
+    mqtt_ble_publish(pclient, time_stamp);
 }
 #ifdef FINSH_USING_MSH
 MSH_CMD_EXPORT_ALIAS(mqtt_example_main, ali_mqtt, ali mqtt);
