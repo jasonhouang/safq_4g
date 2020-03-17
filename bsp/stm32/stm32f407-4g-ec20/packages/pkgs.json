@@ -5,6 +5,11 @@
   "name": "CJSON"
  }, 
  {
+  "path": "/packages/iot/netutils", 
+  "ver": "v1.1.0", 
+  "name": "NETUTILS"
+ }, 
+ {
   "path": "/packages/iot/at_device", 
   "ver": "v2.0.1", 
   "name": "AT_DEVICE"
