@@ -36,6 +36,7 @@ CPPPATHS :=-I$(RTT_ROOT)/bsp/stm32/libraries/HAL_Drivers \
 	-I$(BSP_ROOT)/packages/fal-latest/inc \
 	-I$(BSP_ROOT)/packages/mbedtls-v2.7.10/mbedtls/include \
 	-I$(BSP_ROOT)/packages/mbedtls-v2.7.10/ports/inc \
+	-I$(BSP_ROOT)/packages/netutils-v1.1.0/ntp \
 	-I$(BSP_ROOT)/packages/ota_downloader-latest \
 	-I$(RTT_ROOT)/components/dfs/filesystems/devfs \
 	-I$(RTT_ROOT)/components/dfs/include \
