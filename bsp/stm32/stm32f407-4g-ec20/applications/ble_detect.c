@@ -40,7 +40,6 @@ static rt_err_t uart_input(rt_device_t dev, rt_size_t size)
     return RT_EOK;
 }
 
-#define UART_RX_MAX_LEN   40
 static void serial_thread_entry(void *parameter)
 {
     rt_uint8_t cmd_buff[UART_RX_MAX_DATA_LEN];
@@ -55,8 +54,8 @@ static void serial_thread_entry(void *parameter)
     char *p;
     char ch;
 
-    uint8_t test[] = "hello, world";
-    rt_device_write(serial, -1, test, sizeof(test));
+//    uint8_t test[] = "hello, world";
+//    rt_device_write(serial, 0, test, sizeof(test));
 
     while (1)
     {
@@ -65,7 +64,7 @@ static void serial_thread_entry(void *parameter)
             rt_sem_take(&rx_sem, RT_WAITING_FOREVER);
         }
         //ch = ch + 1;
-        //rt_device_write(serial, 0, &ch, 1);
+        rt_device_write(serial, 0, &ch, 1);
 
         if (!has_detected)
         {
@@ -76,7 +75,7 @@ static void serial_thread_entry(void *parameter)
                 //rt_kprintf("has_detected\r\n");
             }
             cmd_buff[index++] = ch;
-            if ((ch == '\r') || (ch == '\n') || (index >= UART_RX_MAX_LEN - 1))
+            if ((ch == '\r') || (ch == '\n') || (index >= UART_RX_MAX_DATA_LEN - 1))
             {
                 cmd_buff[index - 1] = '\0';
                 has_detected = RT_TRUE;
@@ -89,6 +88,13 @@ static void serial_thread_entry(void *parameter)
 
         rt_kprintf("rec: %s\n", cmd_buff);
  
+        if (cmd_buff[0] != '$')
+        {
+            has_detected = RT_FALSE;
+            memset(cmd_buff, 0x0, UART_RX_MAX_DATA_LEN);
+            index = 0;
+            continue;
+        }
         len = strlen((char*)cmd_buff);
         if (index > 3)
         {
@@ -100,7 +106,6 @@ static void serial_thread_entry(void *parameter)
         {
             paramlen = 0;
         }
-
 
         cmd_code = cmd_buff[1];
         cmd_code <<= 8;
@@ -115,6 +120,7 @@ static void serial_thread_entry(void *parameter)
                 ble_publish((uint32_t)tmp_64);
                 break;
             case CMD_SN:
+                //ntp_request();
                 rt_kprintf("SN have not resoved\n");
                 break;
             default:
@@ -122,6 +128,8 @@ static void serial_thread_entry(void *parameter)
                 break;
         }
         has_detected = RT_FALSE;
+        memset(cmd_buff, 0x0, UART_RX_MAX_DATA_LEN);
+        index = 0;
     }
 }
 

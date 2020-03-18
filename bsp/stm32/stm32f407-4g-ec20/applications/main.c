@@ -30,7 +30,10 @@ int main(void)
     fal_init();
     //oid_detect(0, NULL);
     ble_detect(0, NULL);
-    
+
+    time_t now = time(RT_NULL);
+    rt_kprintf("%s\n", ctime(&now));
+
     rt_kprintf("The current version of APP firmware is %s\n", APP_VERSION);
     
     while (count++)
