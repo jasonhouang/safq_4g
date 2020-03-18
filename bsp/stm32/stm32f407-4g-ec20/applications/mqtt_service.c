@@ -50,6 +50,34 @@ static void example_message_arrive(void *pcontext, void *pclient, iotx_mqtt_even
     }
 }
 
+static int ntp_subscribe(void *handle)
+{
+    int res = 0;
+    ///ext/ntp/a1DFXOrA3QA/${deviceName}/response
+    const char *fmt = "/ext/ntp/%s/%s/response";
+    char *topic = NULL;
+    int topic_len = 0;
+
+    topic_len = strlen(fmt) + strlen(DEMO_PRODUCT_KEY) + strlen(DEMO_DEVICE_NAME) + 1;
+    topic = HAL_Malloc(topic_len);
+    if (topic == NULL) {
+        EXAMPLE_TRACE("memory not enough");
+        return -1;
+    }
+    memset(topic, 0, topic_len);
+    HAL_Snprintf(topic, topic_len, fmt, DEMO_PRODUCT_KEY, DEMO_DEVICE_NAME);
+
+    res = IOT_MQTT_Subscribe(handle, topic, IOTX_MQTT_QOS0, example_message_arrive, NULL);
+    if (res < 0) {
+        EXAMPLE_TRACE("subscribe failed");
+        HAL_Free(topic);
+        return -1;
+    }
+
+    HAL_Free(topic);
+    return 0;
+}
+
 static int example_subscribe(void *handle)
 {
     int res = 0;
@@ -246,6 +274,12 @@ static int mqtt_example_main(int argc, char *argv[])
         return -1;
     }
 
+    res = ntp_subscribe(pclient);
+    if (res < 0) {
+        IOT_MQTT_Destroy(&pclient);
+        return -1;
+    }
+
     while (1) {
 #if 0
         if (0 == loop_cnt % 20) {
@@ -256,6 +290,34 @@ static int mqtt_example_main(int argc, char *argv[])
 
 //        loop_cnt += 1;
     }
+    return 0;
+}
+
+static int mqtt_ntp_request(void *handle)
+{
+    int             res = 0;
+    // /ext/ntp/a1DFXOrA3QA/${deviceName}/request
+    const char     *fmt = "/ext/ntp/%s/%s/request";
+    char           *topic = NULL;
+    int             topic_len = 0;
+
+    topic_len = strlen(fmt) + strlen(DEMO_PRODUCT_KEY) + strlen(DEMO_DEVICE_NAME) + 1;
+    topic = HAL_Malloc(topic_len);
+    if (topic == NULL) {
+        EXAMPLE_TRACE("memory not enough");
+        return -1;
+    }
+    memset(topic, 0, topic_len);
+    HAL_Snprintf(topic, topic_len, fmt, DEMO_PRODUCT_KEY, DEMO_DEVICE_NAME);
+
+    res = IOT_MQTT_Publish_Simple(0, topic, IOTX_MQTT_QOS0, NULL, 0);
+    if (res < 0) {
+        EXAMPLE_TRACE("publish failed, res = %d", res);
+        HAL_Free(topic);
+        return -1;
+    }
+
+    HAL_Free(topic);
     return 0;
 }
 
@@ -355,6 +417,11 @@ void oid_publish(uint32_t oid_code)
 void ble_publish(uint32_t time_stamp)
 {
     mqtt_ble_publish(pclient, time_stamp);
+}
+
+void ntp_request(void)
+{
+    mqtt_ntp_request(pclient);
 }
 #ifdef FINSH_USING_MSH
 MSH_CMD_EXPORT_ALIAS(mqtt_example_main, ali_mqtt, ali mqtt);
