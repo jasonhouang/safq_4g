@@ -1,7 +1,8 @@
 #include <rtthread.h>
 #include <stdlib.h>
 #include "string.h"
-#include "mqtt_service.h"
+//#include "mqtt_service.h"
+#include "linkkit_solo.h"
 
 #define BLE_UART_NAME       "uart6"
 
@@ -11,6 +12,10 @@
 #define CMD_TS  (((uint16_t)'T'<<8)|'S') //Time Stamp
 #define CMD_SN  (((uint16_t)'S'<<8)|'N') //Serial Number
 
+/* 邮箱控制块 */
+struct rt_mailbox mb;
+/* 用于放邮件的内存池 */
+static rt_uint32_t mb_pool[128];
 
 static struct rt_semaphore rx_sem;
 static rt_device_t serial;
@@ -117,7 +122,9 @@ static void serial_thread_entry(void *parameter)
                 para[paramlen] = 0;
                 tmp_64 = strtoull((char*)para, &p, 10);
                 rt_kprintf("ble timestamp: %d\r\n", (uint32_t)tmp_64);
-                ble_publish((uint32_t)tmp_64);
+                //ble_publish((uint32_t)tmp_64);
+                //app_post_property_CurrentTime((uint32_t)tmp_64);
+                rt_mb_send(&mb, (rt_ubase_t)tmp_64);
                 break;
             case CMD_SN:
                 //ntp_request();
@@ -133,10 +140,17 @@ static void serial_thread_entry(void *parameter)
     }
 }
 
+#if 0
 static void mqtt_thread_entry(void *parameter)
 {
     ali_mqtt_init();
 }
+#else
+static void link_thread_entry(void *parameter)
+{
+    linkkit_solo_main();
+}
+#endif
 
 int ble_detect(int argc, char *argv[])
 {
@@ -165,6 +179,17 @@ int ble_detect(int argc, char *argv[])
 
     rt_device_set_rx_indicate(serial, uart_input);
 
+    ret = rt_mb_init(&mb,
+            "mbt",                      /* 名称是 mbt */
+            &mb_pool[0],                /* 邮箱用到的内存池是 mb_pool */
+            sizeof(mb_pool) / 4,        /* 邮箱中的邮件数目，因为一封邮件占 4 字节 */
+            RT_IPC_FLAG_FIFO);          /* 采用 FIFO 方式进行线程等待 */
+    if (ret != RT_EOK)
+    {
+        rt_kprintf("init mailbox failed.\n");
+        return -1;
+    }
+#if 0 
     rt_thread_t thread_mqtt = rt_thread_create("mqtt", mqtt_thread_entry, RT_NULL, 3072, 25, 10);
     if (thread_mqtt != RT_NULL)
     {
@@ -175,6 +200,18 @@ int ble_detect(int argc, char *argv[])
         ret = RT_ERROR;
         return ret;
     }
+#else
+    rt_thread_t thread_link = rt_thread_create("link", link_thread_entry, RT_NULL, 3072, 25, 10);
+    if (thread_link != RT_NULL)
+    {
+        rt_thread_startup(thread_link);
+    }
+    else
+    {
+        ret = RT_ERROR;
+        return ret;
+    }
+#endif
 
     rt_thread_t thread = rt_thread_create("serial", serial_thread_entry, RT_NULL, 2048, 25, 10);
     if (thread != RT_NULL)

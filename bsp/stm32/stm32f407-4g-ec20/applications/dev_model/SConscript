@@ -4,14 +4,9 @@ from building import *
 cwd     = GetCurrentDir()
 CPPPATH = [cwd, str(Dir('#'))]
 src     = Split("""
-main.c
-ble_detect.c
-dev_model/linkkit_example_solo.c
-dev_model/cJSON.c
+linkkit_example_gateway.c
+cJSON.c
 """)
-
-
-CPPPATH += [cwd + '/dev_model']
 
 group = DefineGroup('Applications', src, depend = [''], CPPPATH = CPPPATH)
 

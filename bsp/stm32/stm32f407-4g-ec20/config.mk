@@ -16,6 +16,7 @@ CPPPATHS :=-I$(RTT_ROOT)/bsp/stm32/libraries/HAL_Drivers \
 	-I$(RTT_ROOT)/bsp/stm32/libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Inc \
 	-I$(BSP_ROOT) \
 	-I$(BSP_ROOT)/applications \
+	-I$(BSP_ROOT)/applications/dev_model \
 	-I$(BSP_ROOT)/board \
 	-I$(BSP_ROOT)/board/CubeMX_Config/Inc \
 	-I$(BSP_ROOT)/board/ports \
@@ -32,7 +33,6 @@ CPPPATHS :=-I$(RTT_ROOT)/bsp/stm32/libraries/HAL_Drivers \
 	-I$(BSP_ROOT)/packages/ali-iotkit-v3.0.1/iotkit-embedded/wrappers \
 	-I$(BSP_ROOT)/packages/at_device-v2.0.1/class/ec20 \
 	-I$(BSP_ROOT)/packages/at_device-v2.0.1/inc \
-	-I$(BSP_ROOT)/packages/cJSON-v1.0.2 \
 	-I$(BSP_ROOT)/packages/fal-latest/inc \
 	-I$(BSP_ROOT)/packages/mbedtls-v2.7.10/mbedtls/include \
 	-I$(BSP_ROOT)/packages/mbedtls-v2.7.10/ports/inc \
