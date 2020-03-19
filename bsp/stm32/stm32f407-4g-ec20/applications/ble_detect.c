@@ -4,6 +4,8 @@
 #include "string.h"
 //#include "mqtt_service.h"
 #include "linkkit_solo.h"
+#include "ble_detect.h"
+#include "ntp.h"
 
 #define BLE_UART_NAME       "uart6"
 
@@ -12,12 +14,16 @@
 
 #define CMD_TS  (((uint16_t)'T'<<8)|'S') //Time Stamp
 #define CMD_SN  (((uint16_t)'S'<<8)|'N') //Serial Number
+#define CMD_RD  (((uint16_t)'R'<<8)|'D') //Request Date
 
+#define FIFO_SIZE                           128
 /* 邮箱控制块 */
 struct rt_mailbox mb;
 static rt_timer_t timer;
+static staple_time_t staple_time[FIFO_SIZE];
+static rt_uint8_t head = 0;
 /* 用于放邮件的内存池 */
-static rt_uint32_t mb_pool[128];
+static rt_ubase_t mb_pool[FIFO_SIZE];
 
 static struct rt_semaphore rx_sem;
 static rt_device_t serial;
@@ -43,8 +49,21 @@ static void timeout(void *parameter)
     struct timeval tv;
     gettimeofday(&tv, NULL);
 
-    rt_mb_send(&mb, (rt_ubase_t)tv.tv_sec);
-    rt_kprintf("send staple time: %lu\n", tv.tv_sec);
+    static rt_uint32_t sn = 0;
+
+    staple_time[head].time = tv.tv_sec;
+    staple_time[head].sn = sn++;
+
+    if (RT_EOK == rt_mb_send(&mb, (rt_ubase_t)&staple_time[head]))
+    {
+        rt_kprintf("send staple: sn = %lu, time = %lu\n", staple_time[head].sn, staple_time[head].time);
+        head ++;
+        head %= FIFO_SIZE;
+    }
+    else
+    {
+        rt_kprintf("send mail fail, mail full\n");
+    }
 }
 
 
@@ -65,6 +84,8 @@ static void serial_thread_entry(void *parameter)
     rt_uint8_t paramlen;
     rt_uint64_t tmp_64;
     rt_uint8_t len;
+    time_t time;
+    char update_time_cmd[20];
 
     char *p;
     char ch;
@@ -79,7 +100,7 @@ static void serial_thread_entry(void *parameter)
             rt_sem_take(&rx_sem, RT_WAITING_FOREVER);
         }
         //ch = ch + 1;
-        rt_device_write(serial, 0, &ch, 1);
+        //rt_device_write(serial, 0, &ch, 1);
 
         if (!has_detected)
         {
@@ -139,6 +160,13 @@ static void serial_thread_entry(void *parameter)
             case CMD_SN:
                 //ntp_request();
                 rt_kprintf("SN have not resoved\n");
+                break;
+            case CMD_RD:
+                time = ntp_get_time(NULL);
+                rt_kprintf("ntp_get_time: %lu\n", time); 
+                rt_sprintf(update_time_cmd, "DA %lu\r\n", time);
+                rt_kprintf("update_time_cmd: %s\n", update_time_cmd); 
+                rt_device_write(serial, 0, &update_time_cmd[0], strlen(update_time_cmd));
                 break;
             default:
                 rt_kprintf("Unkown Command.\r\n");

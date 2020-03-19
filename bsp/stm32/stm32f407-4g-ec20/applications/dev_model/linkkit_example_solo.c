@@ -35,6 +35,7 @@ extern int HAL_Snprintf(char *str, const int len, const char *fmt, ...);
 #endif
 
 #include "linkkit_solo.h"
+#include "ble_detect.h"
 
 
 #define EXAMPLE_TRACE(...)                                          \
@@ -67,6 +68,7 @@ char DEVICE_SECRET[IOTX_DEVICE_SECRET_LEN + 1] = {0};
 
 static user_example_ctx_t g_user_example_ctx;
 
+static staple_time_t *staple_time = NULL;
 /** cloud connected event callback */
 static int user_connected_event_handler(void)
 {
@@ -227,10 +229,13 @@ static int user_cota_event_handler(int type, const char *config_id, int config_s
     return 0;
 }
 
-static void app_post_property_staple_time(uint32_t value)
+static void app_post_property_staple_time(staple_time_t *staple)
 {
     int32_t res = 0;
     char property_payload[64] = {0};
+
+    if (!staple)
+        return;
 
     //struct timeval tv;
     //gettimeofday(&tv, NULL);
@@ -238,7 +243,7 @@ static void app_post_property_staple_time(uint32_t value)
     //itoa(tv.tv_sec * 1000 + tv.tv_usec / 1000, (char *)str_date, 10);
     //rt_uint64_t ms = value * 1000;//tv.tv_sec * 1000 + tv.tv_usec / 1000;
 
-    res = HAL_Snprintf(property_payload, sizeof(property_payload), "{\"stapleTime\": \"%lu\"}", value);
+    res = HAL_Snprintf(property_payload, sizeof(property_payload), "{\"sn\": \"%lu\",\"stapleTime\": \"%lu\"}", staple->sn, staple->time);
     if (res < 0)
     {
         EXAMPLE_TRACE("HAL_Snprintf error: %d", res);
@@ -302,7 +307,6 @@ int linkkit_solo_main(void)
     int cnt = 0;
     iotx_linkkit_dev_meta_info_t master_meta_info;
     int domain_type = 0, dynamic_register = 0, post_reply_need = 0;
-    uint32_t time_data;
 
 #ifdef ATM_ENABLED
     if (IOT_ATM_Init() < 0) {
@@ -394,10 +398,10 @@ int linkkit_solo_main(void)
 //            break;
 //        }
         /* 从邮箱中收取邮件 */
-        if (rt_mb_recv(&mb, (rt_ubase_t *)&time_data, RT_WAITING_NO) == RT_EOK)
+        if (rt_mb_recv(&mb, (rt_ubase_t *)&staple_time, RT_WAITING_NO) == RT_EOK)
         {
-            rt_kprintf("thread1: get a mail from mailbox, the content: %lu\n", time_data);
-            app_post_property_staple_time(time_data);
+            rt_kprintf("link: get a mail from mailbox, staple: sn = %lu, time = %lu\n", staple_time->sn, staple_time->time);
+            app_post_property_staple_time(staple_time);
         }
 
         HAL_SleepMs(1000);
