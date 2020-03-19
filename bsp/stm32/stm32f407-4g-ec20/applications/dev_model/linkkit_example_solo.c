@@ -390,9 +390,9 @@ int linkkit_solo_main(void)
             //app_post_property_staple_time(tv.tv_sec);
         }
 
-        if (++cnt > 3600) {
-            break;
-        }
+//        if (++cnt > 3600) {
+//            break;
+//        }
         /* 从邮箱中收取邮件 */
         if (rt_mb_recv(&mb, (rt_ubase_t *)&time_data, RT_WAITING_NO) == RT_EOK)
         {
