@@ -1,5 +1,6 @@
 #include <rtthread.h>
 #include <stdlib.h>
+#include <sys/time.h>
 #include "string.h"
 //#include "mqtt_service.h"
 #include "linkkit_solo.h"
@@ -14,6 +15,7 @@
 
 /* 邮箱控制块 */
 struct rt_mailbox mb;
+static rt_timer_t timer;
 /* 用于放邮件的内存池 */
 static rt_uint32_t mb_pool[128];
 
@@ -36,6 +38,14 @@ static uint32_t uint32_big_decode(const uint8_t * p_encoded_data)
             (((uint32_t)((uint8_t *)p_encoded_data)[3]) << 0) );
 }
 
+static void timeout(void *parameter)
+{
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+
+    rt_mb_send(&mb, (rt_ubase_t)tv.tv_sec);
+    rt_kprintf("send staple time: %lu\n", tv.tv_sec);
+}
 
 
 static rt_err_t uart_input(rt_device_t dev, rt_size_t size)
@@ -201,10 +211,18 @@ int ble_detect(int argc, char *argv[])
         return ret;
     }
 #else
-    rt_thread_t thread_link = rt_thread_create("link", link_thread_entry, RT_NULL, 3072, 25, 10);
+    rt_thread_t thread_link = rt_thread_create("link", link_thread_entry, RT_NULL, 4096, 25, 10);
     if (thread_link != RT_NULL)
     {
         rt_thread_startup(thread_link);
+
+        /* 创建定时器  周期定时器 */
+        timer = rt_timer_create("timer", timeout,
+                RT_NULL, 10000,
+                RT_TIMER_FLAG_PERIODIC);
+        /* 启动定时器 */
+        if (timer != RT_NULL)
+            rt_timer_start(timer);
     }
     else
     {

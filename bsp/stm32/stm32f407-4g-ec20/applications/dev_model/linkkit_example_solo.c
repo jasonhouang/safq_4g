@@ -227,7 +227,7 @@ static int user_cota_event_handler(int type, const char *config_id, int config_s
     return 0;
 }
 
-void app_post_property_CurrentTime(uint32_t value)
+static void app_post_property_staple_time(uint32_t value)
 {
     int32_t res = 0;
     char property_payload[64] = {0};
@@ -238,7 +238,7 @@ void app_post_property_CurrentTime(uint32_t value)
     //itoa(tv.tv_sec * 1000 + tv.tv_usec / 1000, (char *)str_date, 10);
     //rt_uint64_t ms = value * 1000;//tv.tv_sec * 1000 + tv.tv_usec / 1000;
 
-    res = HAL_Snprintf(property_payload, sizeof(property_payload), "{\"CurrentTime\": \"%lu\"}", value);
+    res = HAL_Snprintf(property_payload, sizeof(property_payload), "{\"stapleTime\": \"%lu\"}", value);
     if (res < 0)
     {
         EXAMPLE_TRACE("HAL_Snprintf error: %d", res);
@@ -382,7 +382,12 @@ int linkkit_solo_main(void)
         }
 
         if ((cnt % 10) == 0) {
-            //app_post_property_CurrentTime(1584540661);
+            //struct timeval tv;
+            //gettimeofday(&tv, NULL);
+            //char *str_date[20];
+            //itoa(tv.tv_sec * 1000 + tv.tv_usec / 1000, (char *)str_date, 10);
+            //rt_uint64_t ms = value * 1000;//tv.tv_sec * 1000 + tv.tv_usec / 1000;
+            //app_post_property_staple_time(tv.tv_sec);
         }
 
         if (++cnt > 3600) {
@@ -392,7 +397,7 @@ int linkkit_solo_main(void)
         if (rt_mb_recv(&mb, (rt_ubase_t *)&time_data, RT_WAITING_NO) == RT_EOK)
         {
             rt_kprintf("thread1: get a mail from mailbox, the content: %lu\n", time_data);
-            app_post_property_CurrentTime(time_data);
+            app_post_property_staple_time(time_data);
         }
 
         HAL_SleepMs(1000);
