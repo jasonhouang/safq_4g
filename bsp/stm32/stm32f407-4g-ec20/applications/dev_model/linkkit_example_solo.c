@@ -68,7 +68,7 @@ char DEVICE_SECRET[IOTX_DEVICE_SECRET_LEN + 1] = {0};
 
 static user_example_ctx_t g_user_example_ctx;
 
-static staple_time_t *staple_time = NULL;
+static mail_box_t *mail = NULL;
 /** cloud connected event callback */
 static int user_connected_event_handler(void)
 {
@@ -269,6 +269,36 @@ void user_post_property(void)
     EXAMPLE_TRACE("Post Property Message ID: %d", res);
 }
 
+void app_post_device_state_event(device_state_t *device)
+{
+    int res = 0;
+    char *event_id = "BleDeviceState";
+    char *connected = "connected";
+    char *disconnected = "disconnected";
+
+    char event_payload[64] = {0};
+
+    if (!device)
+        return;
+
+    if (device->state)
+    {
+        res = HAL_Snprintf(event_payload, sizeof(event_payload), "{\"state\": \"%s\",\"atTime\": \"%lu\"}", connected, device->time);
+    }
+    else
+    {
+        res = HAL_Snprintf(event_payload, sizeof(event_payload), "{\"state\": \"%s\",\"atTime\": \"%lu\"}", disconnected, device->time);
+    }
+    if (res < 0)
+    {
+        EXAMPLE_TRACE("HAL_Snprintf error: %d", res);
+    }
+
+    res = IOT_Linkkit_TriggerEvent(EXAMPLE_MASTER_DEVID, event_id, strlen(event_id),
+                                   event_payload, strlen(event_payload));
+    EXAMPLE_TRACE("Post Event Message ID: %d", res);
+}
+
 void user_post_event(void)
 {
     int res = 0;
@@ -398,10 +428,19 @@ int linkkit_solo_main(void)
 //            break;
 //        }
         /* 从邮箱中收取邮件 */
-        if (rt_mb_recv(&mb, (rt_ubase_t *)&staple_time, RT_WAITING_NO) == RT_EOK)
+        if (rt_mb_recv(&mb, (rt_ubase_t *)&mail, RT_WAITING_NO) == RT_EOK)
         {
-            rt_kprintf("link: get a mail from mailbox, staple: sn = %lu, time = %lu\n", staple_time->sn, staple_time->time);
-            app_post_property_staple_time(staple_time);
+            rt_kprintf("link: get a mail from mailbox, type = %d\n", mail->type);
+            if (mail->type == MAIL_TYPE_SAPLE_TIME)
+            {
+                rt_kprintf("staple: sn = %lu, time = %lu\n", mail->staple_time.sn, mail->staple_time.time);
+                app_post_property_staple_time(&mail->staple_time);
+            }
+            else if (mail->type == MAIL_TYPE_DEVICE_STATE)
+            {
+                rt_kprintf("state = %d, at time = %lu\n", mail->device_state.state, mail->device_state.time);
+                app_post_device_state_event(&mail->device_state);
+            }
         }
 
         HAL_SleepMs(1000);

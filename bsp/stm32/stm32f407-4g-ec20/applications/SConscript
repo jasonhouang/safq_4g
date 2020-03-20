@@ -6,6 +6,7 @@ CPPPATH = [cwd, str(Dir('#'))]
 src     = Split("""
 main.c
 ble_detect.c
+parse_cmd_line.c
 dev_model/linkkit_example_solo.c
 dev_model/cJSON.c
 """)

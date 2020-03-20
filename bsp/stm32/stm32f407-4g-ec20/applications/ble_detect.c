@@ -1,11 +1,13 @@
 #include <rtthread.h>
 #include <stdlib.h>
 #include <sys/time.h>
+//#include <signal.h>
 #include "string.h"
 //#include "mqtt_service.h"
 #include "linkkit_solo.h"
 #include "ble_detect.h"
 #include "ntp.h"
+#include "parse_cmd_line.h"
 
 #define BLE_UART_NAME       "uart6"
 
@@ -16,17 +18,26 @@
 #define CMD_SN  (((uint16_t)'S'<<8)|'N') //Serial Number
 #define CMD_RD  (((uint16_t)'R'<<8)|'D') //Request Date
 
-#define FIFO_SIZE                           128
+#define FIFO_SIZE                           512
+
+//#define SIMULATE_STAPLE
+
 /* 邮箱控制块 */
 struct rt_mailbox mb;
+#ifdef SIMULATE_STAPLE
 static rt_timer_t timer;
-static staple_time_t staple_time[FIFO_SIZE];
+#endif
+static staple_time_t staple_time;
+static device_state_t device_state;
+static mail_box_t mail_box[FIFO_SIZE];
 static rt_uint8_t head = 0;
+
 /* 用于放邮件的内存池 */
 static rt_ubase_t mb_pool[FIFO_SIZE];
 
 static struct rt_semaphore rx_sem;
 static rt_device_t serial;
+static rt_thread_t thread_link;
 
 static uint32_t uint32_decode(const uint8_t * p_encoded_data)
 {
@@ -44,6 +55,7 @@ static uint32_t uint32_big_decode(const uint8_t * p_encoded_data)
             (((uint32_t)((uint8_t *)p_encoded_data)[3]) << 0) );
 }
 
+#ifdef SIMULATE_STAPLE
 static void timeout(void *parameter)
 {
     struct timeval tv;
@@ -51,21 +63,19 @@ static void timeout(void *parameter)
 
     static rt_uint32_t sn = 0;
 
-    staple_time[head].time = tv.tv_sec;
-    staple_time[head].sn = sn++;
+    staple_time.time = tv.tv_sec;
+    staple_time.sn = sn++;
 
-    if (RT_EOK == rt_mb_send(&mb, (rt_ubase_t)&staple_time[head]))
+    if (RT_EOK == rt_mb_send(&mb, (rt_ubase_t)&staple_time))
     {
-        rt_kprintf("send staple: sn = %lu, time = %lu\n", staple_time[head].sn, staple_time[head].time);
-        head ++;
-        head %= FIFO_SIZE;
+        rt_kprintf("send staple: sn = %lu, time = %lu\n", staple_time.sn, staple_time.time);
     }
     else
     {
         rt_kprintf("send mail fail, mail full\n");
     }
 }
-
+#endif
 
 static rt_err_t uart_input(rt_device_t dev, rt_size_t size)
 {
@@ -74,6 +84,58 @@ static rt_err_t uart_input(rt_device_t dev, rt_size_t size)
     return RT_EOK;
 }
 
+#if 0
+static void send_mail(rt_ubase_t *mail)
+{
+    if (RT_EOK == rt_mb_send(&mb, (rt_ubase_t)&mail_box[head]))
+    {
+        rt_kprintf("send mail: type = %d, sn = %lu, time = %lu\n", mail_box[head].type, 
+                mail_box[head].staple_time.sn, mail_box[head].staple_time.time);
+        head ++;
+        head %= FIFO_SIZE;
+    }
+    else
+    {
+        rt_kprintf("send mail fail, mail full\n");
+    }
+}
+#endif
+
+static void device_state_send_connected(rt_bool_t is_connected)
+{
+    device_state_t device_state;
+    struct timeval tv;
+
+    gettimeofday(&tv, NULL);
+
+    if (is_connected)
+    {
+        device_state.state = 1;
+    }
+    else
+    {
+        device_state.state = 0;
+    }
+
+    device_state.time = tv.tv_sec;
+
+    memset((void *)&mail_box[head], 0x0, sizeof(mail_box_t));
+    mail_box[head].type = MAIL_TYPE_DEVICE_STATE;
+    memcpy((void *)&(mail_box[head].device_state), (void *)&device_state, sizeof(device_state_t)); 
+
+    if (RT_EOK == rt_mb_send(&mb, (rt_ubase_t)&mail_box[head]))
+    {
+        rt_kprintf("send mail: type = %d, state = %lu, time = %lu\n", mail_box[head].type, 
+                mail_box[head].device_state.state, mail_box[head].device_state.time);
+        head ++;
+        head %= FIFO_SIZE;
+    }
+    else
+    {
+        rt_kprintf("send mail fail, mail full\n");
+    }
+}
+#define ULONG_STR_SIZE  11
 static void serial_thread_entry(void *parameter)
 {
     rt_uint8_t cmd_buff[UART_RX_MAX_DATA_LEN];
@@ -86,6 +148,10 @@ static void serial_thread_entry(void *parameter)
     rt_uint8_t len;
     time_t time;
     char update_time_cmd[20];
+    char cmdname[15] = {0};
+    char ulong_str[ULONG_STR_SIZE];
+    char *ack_ok = "OK\r\n";
+    rt_uint8_t para_len = 0;
 
     char *p;
     char ch;
@@ -104,12 +170,14 @@ static void serial_thread_entry(void *parameter)
 
         if (!has_detected)
         {
+#if 0
             if (ch == '$')
             {
                 index = 0;
                 //cmd_buff[index++] = ch;
                 //rt_kprintf("has_detected\r\n");
             }
+#endif
             cmd_buff[index++] = ch;
             if ((ch == '\r') || (ch == '\n') || (index >= UART_RX_MAX_DATA_LEN - 1))
             {
@@ -122,8 +190,91 @@ static void serial_thread_entry(void *parameter)
             }
         }
 
-        rt_kprintf("rec: %s\n", cmd_buff);
- 
+        rt_kprintf("uart_read: %s\n", &cmd_buff[0]);
+#if 0
+        for (int i = 0; i < index; i++)
+        {
+            rt_kprintf("%02x ", cmd_buff[i]);
+        }
+        rt_kprintf("\r\n");
+#endif
+
+        if (cmd_buff[0] == '#' || strlen(cmd_buff) == 0)
+        {
+            //rt_kprintf("go to exit, decteced\n");
+            goto __exit;
+        }
+
+        covert_line(cmd_buff, cmdname);
+        rt_kprintf("cmd_body: %s, cmd_name: %s\n", cmd_buff, cmdname);
+        if (strcmp(cmdname, "STAPLE") == 0)
+        {
+            memset((void *)&staple_time, 0x0, sizeof(staple_time_t));
+            para_len = 0;
+            memset(ulong_str, 0x0, ULONG_STR_SIZE);
+            if (find_command_para(cmd_buff, 'T', ulong_str, 0) != -1)
+            {
+                staple_time.time = atol(ulong_str);
+                //rt_kprintf("staple.time = %lu\n", staple_time.time);
+                para_len ++;
+            }
+
+            memset(ulong_str, 0x0, ULONG_STR_SIZE);
+            if (find_command_para(cmd_buff, 'N', ulong_str, 0) != -1)
+            {
+                staple_time.sn = atol(ulong_str);
+                //rt_kprintf("staple.sn = %lu\n", staple_time.sn);
+                para_len ++;
+            }
+
+#if 0
+            if (para_len == 2)
+            {
+                rt_device_write(serial, 0, ack_ok, strlen(ack_ok));
+            }
+#endif
+
+            memset((void *)&mail_box[head], 0x0, sizeof(mail_box_t));
+            mail_box[head].type = MAIL_TYPE_SAPLE_TIME;
+            memcpy((void *)&(mail_box[head].staple_time), (void *)&staple_time, sizeof(staple_time_t)); 
+
+            if (RT_EOK == rt_mb_send(&mb, (rt_ubase_t)&mail_box[head]))
+            {
+                rt_kprintf("send mail: type = %d, sn = %lu, time = %lu\n", mail_box[head].type, 
+                        mail_box[head].staple_time.sn, mail_box[head].staple_time.time);
+                head ++;
+                head %= FIFO_SIZE;
+            }
+            else
+            {
+                rt_kprintf("send mail fail, mail full\n");
+            }
+        }
+        else if (strcmp(cmdname, "CONNECTED") == 0)
+        {
+            time = ntp_get_time(NULL);
+            if (time > 0)
+            {
+                rt_kprintf("ntp_get_time: %lu\n", time); 
+                rt_sprintf(update_time_cmd, "DA %lu\r\n", time);
+                rt_kprintf("update_time_cmd: %s\n", update_time_cmd); 
+                rt_device_write(serial, 0, &update_time_cmd[0], strlen(update_time_cmd));
+            }
+            device_state_send_connected(RT_TRUE);
+
+            //rt_thread_kill(thread_link, SIGUSR1);
+        }
+        else if (strcmp(cmdname, "DISCONNECTED") == 0)
+        {
+            rt_kprintf("device disconnected\n"); 
+            device_state_send_connected(RT_FALSE);
+            //rt_thread_kill(thread_link, SIGUSR2);
+        }
+        else
+        {
+            rt_kprintf("Unkowmn Command\n");
+        }
+#if 0
         if (cmd_buff[0] != '$')
         {
             has_detected = RT_FALSE;
@@ -172,8 +323,10 @@ static void serial_thread_entry(void *parameter)
                 rt_kprintf("Unkown Command.\r\n");
                 break;
         }
+#endif
+__exit:
         has_detected = RT_FALSE;
-        memset(cmd_buff, 0x0, UART_RX_MAX_DATA_LEN);
+        memset((void *)cmd_buff, 0x0, UART_RX_MAX_DATA_LEN);
         index = 0;
     }
 }
@@ -183,12 +336,29 @@ static void mqtt_thread_entry(void *parameter)
 {
     ali_mqtt_init();
 }
-#else
-static void link_thread_entry(void *parameter)
+#endif
+#if 0
+void link_signal_handler(int sig)
 {
-    linkkit_solo_main();
+    rt_kprintf("link received signal %d\n", sig);
+    if (sig == SIGUSR1)
+    {
+        app_post_connected_event();    
+    }
+    if (sig == SIGUSR2)
+    {
+        app_post_disconnected_event();
+    }
 }
 #endif
+static void link_thread_entry(void *parameter)
+{
+    //rt_signal_install(SIGUSR1, link_signal_handler);
+    //rt_signal_unmask(SIGUSR1);
+    //rt_signal_install(SIGUSR2, link_signal_handler);
+    //rt_signal_unmask(SIGUSR2);
+    linkkit_solo_main();
+}
 
 int ble_detect(int argc, char *argv[])
 {
@@ -239,11 +409,12 @@ int ble_detect(int argc, char *argv[])
         return ret;
     }
 #else
-    rt_thread_t thread_link = rt_thread_create("link", link_thread_entry, RT_NULL, 4096, 25, 10);
+    thread_link = rt_thread_create("link", link_thread_entry, RT_NULL, 4096, 25, 10);
     if (thread_link != RT_NULL)
     {
         rt_thread_startup(thread_link);
 
+#ifdef SIMULATE_STAPLE
         /* 创建定时器  周期定时器 */
         timer = rt_timer_create("timer", timeout,
                 RT_NULL, 10000,
@@ -251,6 +422,7 @@ int ble_detect(int argc, char *argv[])
         /* 启动定时器 */
         if (timer != RT_NULL)
             rt_timer_start(timer);
+#endif
     }
     else
     {
