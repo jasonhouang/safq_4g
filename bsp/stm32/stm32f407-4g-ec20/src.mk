@@ -37,6 +37,7 @@ SRC_FILES +=$(BSP_ROOT)/applications/dev_model/cJSON.c
 SRC_FILES +=$(BSP_ROOT)/applications/dev_model/linkkit_example_solo.c
 SRC_FILES +=$(BSP_ROOT)/applications/main.c
 SRC_FILES +=$(BSP_ROOT)/applications/parse_cmd_line.c
+SRC_FILES +=$(BSP_ROOT)/applications/wdt_app.c
 SRC_FILES +=$(BSP_ROOT)/board/CubeMX_Config/Src/stm32f4xx_hal_msp.c
 SRC_FILES +=$(BSP_ROOT)/board/board.c
 SRC_FILES +=$(BSP_ROOT)/board/ports/fal_flash_sfud_port.c

@@ -5,6 +5,7 @@ cwd     = GetCurrentDir()
 CPPPATH = [cwd, str(Dir('#'))]
 src     = Split("""
 main.c
+wdt_app.c
 ble_detect.c
 parse_cmd_line.c
 dev_model/linkkit_example_solo.c

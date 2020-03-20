@@ -15,6 +15,7 @@
 #include "fal.h"
 //#include "oid_detect.h"
 #include "ble_detect.h"
+#include "wdt_app.h"
 
 #define APP_VERSION  "1.0.0"
 
@@ -27,6 +28,7 @@ int main(void)
     /* set LED0 pin mode to output */
     rt_pin_mode(LED0_PIN, PIN_MODE_OUTPUT);
 
+    wdt_start(0, NULL);
     fal_init();
     //oid_detect(0, NULL);
     ble_detect(0, NULL);
