@@ -100,6 +100,7 @@
 #define RT_USING_SFUD
 #define RT_SFUD_USING_SFDP
 #define RT_SFUD_USING_FLASH_INFO_TABLE
+#define RT_USING_WDT
 
 /* Using USB */
 
@@ -337,6 +338,7 @@
 #define BSP_SPI2_TX_USING_DMA
 #define BSP_SPI2_RX_USING_DMA
 #define BSP_USING_ON_CHIP_FLASH
+#define BSP_USING_WDT
 
 /* Board extended module Drivers */
 
