@@ -852,7 +852,7 @@ static void ec20_init_thread_entry(void *parameter)
             AT_SEND_CMD(client, resp, 0, 300, QICSGP_CHINA_TELECOM);
         }
         /* Enable automatic time zone update via NITZ and update LOCAL time to RTC */
-        //AT_SEND_CMD(client, resp, 0, 300, "AT+CTZU=3");
+        AT_SEND_CMD(client, resp, 0, 300, "AT+CTZU=3");
         /* Get RTC time */
         AT_SEND_CMD(client, resp, 0, 300, "AT+CCLK?");
 
