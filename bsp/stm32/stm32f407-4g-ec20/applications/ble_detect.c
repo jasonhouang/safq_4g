@@ -20,13 +20,12 @@
 
 #define FIFO_SIZE                           512
 
-//#define SIMULATE_STAPLE
 
 /* 邮箱控制块 */
 struct rt_mailbox mb;
-#ifdef SIMULATE_STAPLE
 static rt_timer_t timer;
-#endif
+static rt_bool_t is_sync_ntp_time = RT_FALSE;
+
 static staple_time_t staple_time;
 static device_state_t device_state;
 static mail_box_t mail_box[FIFO_SIZE];
@@ -36,6 +35,7 @@ static rt_uint8_t head = 0;
 static rt_ubase_t mb_pool[FIFO_SIZE];
 
 static struct rt_semaphore rx_sem;
+static struct rt_semaphore sync_sem;
 static rt_device_t serial;
 static rt_thread_t thread_link;
 
@@ -55,27 +55,10 @@ static uint32_t uint32_big_decode(const uint8_t * p_encoded_data)
             (((uint32_t)((uint8_t *)p_encoded_data)[3]) << 0) );
 }
 
-#ifdef SIMULATE_STAPLE
 static void timeout(void *parameter)
 {
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-
-    static rt_uint32_t sn = 0;
-
-    staple_time.time = tv.tv_sec;
-    staple_time.sn = sn++;
-
-    if (RT_EOK == rt_mb_send(&mb, (rt_ubase_t)&staple_time))
-    {
-        rt_kprintf("send staple: sn = %lu, time = %lu\n", staple_time.sn, staple_time.time);
-    }
-    else
-    {
-        rt_kprintf("send mail fail, mail full\n");
-    }
+    rt_sem_release(&sync_sem);
 }
-#endif
 
 static rt_err_t uart_input(rt_device_t dev, rt_size_t size)
 {
@@ -135,6 +118,52 @@ static void device_state_send_connected(rt_bool_t is_connected)
         rt_kprintf("send mail fail, mail full\n");
     }
 }
+
+static void sync_ble_thread_entry(void *parameter)
+{
+    time_t time;
+    struct timeval tv;
+    char update_time_cmd[20];
+
+    rt_sem_init(&sync_sem, "sync_sem", 0, RT_IPC_FLAG_FIFO);
+    rt_sem_release(&sync_sem);
+
+    /* 创建定时器  周期定时器 */
+    timer = rt_timer_create("timer", timeout,
+            RT_NULL, 60000,/*60000,*/
+            RT_TIMER_FLAG_PERIODIC);
+    /* 启动定时器 */
+    if (timer != RT_NULL)
+        rt_timer_start(timer);
+
+    while (1)
+    {
+        rt_sem_take(&sync_sem, RT_WAITING_FOREVER);
+
+        if (is_sync_ntp_time == RT_FALSE)
+        {
+            time = ntp_sync_to_rtc(NULL);
+            rt_kprintf("ntp_get_time: %lu\n", time); 
+            if (time > 0)
+            {
+                is_sync_ntp_time = RT_TRUE;
+            }
+        }
+        else
+        {
+            gettimeofday(&tv, NULL);
+            time = tv.tv_sec;
+            rt_kprintf("get_local_time: %lu\n", time); 
+        }
+
+        if (time > 0)
+        {
+            rt_sprintf(update_time_cmd, "DA %lu\r\n", time);
+            rt_kprintf("update_time_cmd: %s\n", update_time_cmd); 
+            rt_device_write(serial, 0, &update_time_cmd[0], strlen(update_time_cmd));
+        }
+    }
+}
 #define ULONG_STR_SIZE  11
 static void serial_thread_entry(void *parameter)
 {
@@ -146,8 +175,6 @@ static void serial_thread_entry(void *parameter)
     rt_uint8_t paramlen;
     rt_uint64_t tmp_64;
     rt_uint8_t len;
-    time_t time;
-    char update_time_cmd[20];
     char cmdname[15] = {0};
     char ulong_str[ULONG_STR_SIZE];
     char *ack_ok = "OK\r\n";
@@ -252,6 +279,7 @@ static void serial_thread_entry(void *parameter)
         }
         else if (strcmp(cmdname, "CONNECTED") == 0)
         {
+#if 0
             struct timeval tv;
             gettimeofday(&tv, NULL);
             time = tv.tv_sec;//ntp_get_time(NULL);
@@ -262,6 +290,7 @@ static void serial_thread_entry(void *parameter)
                 rt_kprintf("update_time_cmd: %s\n", update_time_cmd); 
                 rt_device_write(serial, 0, &update_time_cmd[0], strlen(update_time_cmd));
             }
+#endif
             device_state_send_connected(RT_TRUE);
 
             //rt_thread_kill(thread_link, SIGUSR1);
@@ -416,15 +445,15 @@ int ble_detect(int argc, char *argv[])
     {
         rt_thread_startup(thread_link);
 
-#ifdef SIMULATE_STAPLE
-        /* 创建定时器  周期定时器 */
-        timer = rt_timer_create("timer", timeout,
-                RT_NULL, 10000,
-                RT_TIMER_FLAG_PERIODIC);
-        /* 启动定时器 */
-        if (timer != RT_NULL)
-            rt_timer_start(timer);
-#endif
+        rt_thread_t sync_ble = rt_thread_create("sync_ble", sync_ble_thread_entry, RT_NULL, 2048, 26, 10);
+        if (sync_ble != RT_NULL)
+        {
+            rt_thread_startup(sync_ble);
+        }
+        else
+        {
+            ret = RT_ERROR;
+        }
     }
     else
     {
