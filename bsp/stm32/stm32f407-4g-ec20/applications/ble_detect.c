@@ -252,7 +252,9 @@ static void serial_thread_entry(void *parameter)
         }
         else if (strcmp(cmdname, "CONNECTED") == 0)
         {
-            time = ntp_get_time(NULL);
+            struct timeval tv;
+            gettimeofday(&tv, NULL);
+            time = tv.tv_sec;//ntp_get_time(NULL);
             if (time > 0)
             {
                 rt_kprintf("ntp_get_time: %lu\n", time); 
