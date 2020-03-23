@@ -279,18 +279,7 @@ static void serial_thread_entry(void *parameter)
         }
         else if (strcmp(cmdname, "CONNECTED") == 0)
         {
-#if 0
-            struct timeval tv;
-            gettimeofday(&tv, NULL);
-            time = tv.tv_sec;//ntp_get_time(NULL);
-            if (time > 0)
-            {
-                rt_kprintf("ntp_get_time: %lu\n", time); 
-                rt_sprintf(update_time_cmd, "DA %lu\r\n", time);
-                rt_kprintf("update_time_cmd: %s\n", update_time_cmd); 
-                rt_device_write(serial, 0, &update_time_cmd[0], strlen(update_time_cmd));
-            }
-#endif
+            rt_sem_release(&sync_sem);
             device_state_send_connected(RT_TRUE);
 
             //rt_thread_kill(thread_link, SIGUSR1);

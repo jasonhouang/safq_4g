@@ -31,8 +31,8 @@ CPPPATHS :=-I$(RTT_ROOT)/bsp/stm32/libraries/HAL_Drivers \
 	-I$(BSP_ROOT)/packages/ali-iotkit-v3.0.1/iotkit-embedded/src/mqtt \
 	-I$(BSP_ROOT)/packages/ali-iotkit-v3.0.1/iotkit-embedded/src/mqtt/impl \
 	-I$(BSP_ROOT)/packages/ali-iotkit-v3.0.1/iotkit-embedded/wrappers \
-	-I$(BSP_ROOT)/packages/at_device-v2.0.1/class/ec20 \
-	-I$(BSP_ROOT)/packages/at_device-v2.0.1/inc \
+	-I$(BSP_ROOT)/packages/at_device-latest/class/ec20 \
+	-I$(BSP_ROOT)/packages/at_device-latest/inc \
 	-I$(BSP_ROOT)/packages/fal-latest/inc \
 	-I$(BSP_ROOT)/packages/mbedtls-v2.7.10/mbedtls/include \
 	-I$(BSP_ROOT)/packages/mbedtls-v2.7.10/ports/inc \
