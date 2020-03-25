@@ -131,7 +131,7 @@ static void sync_ble_thread_entry(void *parameter)
 
     /* 创建定时器  周期定时器 */
     timer = rt_timer_create("timer", timeout,
-            RT_NULL, 360000,/*60000,*/
+            RT_NULL, 60000,/*60000,*/
             RT_TIMER_FLAG_PERIODIC);
     /* 启动定时器 */
     if (timer != RT_NULL)
