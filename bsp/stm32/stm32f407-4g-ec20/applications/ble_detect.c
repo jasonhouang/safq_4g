@@ -123,14 +123,15 @@ static void sync_ble_thread_entry(void *parameter)
 {
     time_t time;
     struct timeval tv;
-    char update_time_cmd[20];
+    char update_time_cmd[30];
+    char time_str[11];
 
     rt_sem_init(&sync_sem, "sync_sem", 0, RT_IPC_FLAG_FIFO);
     rt_sem_release(&sync_sem);
 
     /* 创建定时器  周期定时器 */
     timer = rt_timer_create("timer", timeout,
-            RT_NULL, 60000,/*60000,*/
+            RT_NULL, 360000,/*60000,*/
             RT_TIMER_FLAG_PERIODIC);
     /* 启动定时器 */
     if (timer != RT_NULL)
@@ -151,15 +152,23 @@ static void sync_ble_thread_entry(void *parameter)
         }
         else
         {
-            gettimeofday(&tv, NULL);
-            time = tv.tv_sec;
-            rt_kprintf("get_local_time: %lu\n", time); 
+            time = ntp_get_local_time(NULL);
+            time -= NETUTILS_NTP_TIMEZONE * 3600;
+            //gettimeofday(&tv, NULL);
+            //time = tv.tv_sec - 3600 * 8;
+            rt_kprintf("get_utc_times: %lu\n", time); 
         }
 
         if (time > 0)
         {
-            rt_sprintf(update_time_cmd, "DA %lu\r\n", time);
-            rt_kprintf("update_time_cmd: %s\n", update_time_cmd); 
+            memset(update_time_cmd, 0x0, 30);
+            memset(time_str, 0x0, 11);
+            rt_sprintf(time_str, "%lu", time);
+            //rt_sprintf(update_time_cmd, "DA %lu\r\n", time);
+            rt_uint32_t crc32 = crc32_compute((uint8_t const *)time_str, 10, NULL); 
+            //rt_kprintf("crc32 = 0x%04X(%lu)\n", crc32, crc32);
+            rt_sprintf(update_time_cmd, "DA %s 0x%X\r\n", time_str, crc32);
+            rt_kprintf("uart_write: %s\n", update_time_cmd); 
             rt_device_write(serial, 0, &update_time_cmd[0], strlen(update_time_cmd));
         }
     }
