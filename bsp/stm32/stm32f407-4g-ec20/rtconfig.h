@@ -169,9 +169,9 @@
 #define PKG_USING_NETUTILS
 #define PKG_NETUTILS_NTP
 #define NETUTILS_NTP_TIMEZONE 8
-#define NETUTILS_NTP_HOSTNAME "cn.ntp.org.cn"
-#define NETUTILS_NTP_HOSTNAME2 "ntp.rt-thread.org"
-#define NETUTILS_NTP_HOSTNAME3 "edu.ntp.org.cn"
+#define NETUTILS_NTP_HOSTNAME "ntp1.aliyun.com"
+#define NETUTILS_NTP_HOSTNAME2 "ntp2.aliyun.com"
+#define NETUTILS_NTP_HOSTNAME3 "ntp3.aliyun.com"
 #define PKG_USING_NETUTILS_V110
 #define PKG_USING_AT_DEVICE
 #define AT_DEVICE_USING_EC20
