@@ -382,11 +382,11 @@ void link_signal_handler(int sig)
 #endif
 static void link_thread_entry(void *parameter)
 {
-    //rt_signal_install(SIGUSR1, link_signal_handler);
-    //rt_signal_unmask(SIGUSR1);
-    //rt_signal_install(SIGUSR2, link_signal_handler);
-    //rt_signal_unmask(SIGUSR2);
-    linkkit_solo_main();
+    for (;;)
+    {
+        linkkit_solo_main();
+        rt_thread_mdelay(5000);
+    }
 }
 
 int ble_detect(int argc, char *argv[])
